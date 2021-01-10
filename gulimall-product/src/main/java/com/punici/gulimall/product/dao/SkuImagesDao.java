@@ -1,7 +1,7 @@
 package com.punici.gulimall.product.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.punici.gulimall.product.entity.SkuImagesEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author punici
  * @email punici@163.com
- * @date 2021-01-10 14:46:53
+ * @date 2021-01-10 19:53:51
  */
 @Mapper
 public interface SkuImagesDao extends BaseMapper<SkuImagesEntity> {

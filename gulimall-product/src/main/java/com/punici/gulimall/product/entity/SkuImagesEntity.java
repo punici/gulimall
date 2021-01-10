@@ -2,16 +2,17 @@ package com.punici.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
 
 /**
  * sku图片
  * 
  * @author punici
  * @email punici@163.com
- * @date 2021-01-10 14:46:53
+ * @date 2021-01-10 19:53:51
  */
 @Data
 @TableName("pms_sku_images")

@@ -85,8 +85,5 @@
             <version>9.0.30</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
-
-
 </project>
