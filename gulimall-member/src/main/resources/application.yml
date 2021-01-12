@@ -6,11 +6,15 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://192.168.10.10:3306/gulimall_ums
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: gulimall-member
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.10:8848
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml

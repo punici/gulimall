@@ -11,6 +11,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   application:
     name: gulimall-coupon
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.10:8848
 
 #mybatis mapper路径
 mybatis-plus:
