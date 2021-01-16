@@ -4,12 +4,18 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 9000
+  port: 8080
   connection-timeout: 5000ms
-  servlet:
-    context-path: /renren-fast
+#  servlet:
+#    context-path: /renren-fast
 
 spring:
+  application:
+    name: renren-fast
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.10.10:8848
   # 环境 dev|test|prod
   profiles:
     active: dev
@@ -25,7 +31,7 @@ spring:
   redis:
     open: false  # 是否开启redis缓存  true开启   false关闭
     database: 0
-    host: localhost
+    host: 192.168.10.10
     port: 6379
     password:    # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
@@ -64,7 +70,7 @@ mybatis-plus:
 
 renren:
   redis:
-    open: false
+    open: true
   shiro:
     redis: false
   # APP模块，是通过jwt认证的，如果要使用APP模块，则需要修改【加密秘钥】
