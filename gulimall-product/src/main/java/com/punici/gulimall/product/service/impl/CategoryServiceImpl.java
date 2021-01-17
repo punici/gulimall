@@ -11,6 +11,7 @@ import com.punici.gulimall.product.service.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +40,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return entities.stream().filter(o -> o.getParentCid().equals(0L)).peek(c -> c.setChildren(getChildren(c, entities)))
                 .sorted(Comparator.comparingInt(c -> ((c.getSort() == null) ? 0 : c.getSort()))).collect(Collectors.toList());
     }
-    
     private List<CategoryEntity> getChildren(CategoryEntity entity, List<CategoryEntity> entities)
     {
         return entities.stream().filter(e -> e.getParentCid().equals(entity.getCatId()))
                 .peek(c -> c.setChildren(getChildren(c, entities)))
                 .sorted(Comparator.comparingInt(c -> ((c.getSort() == null) ? 0 : c.getSort()))).collect(Collectors.toList());
     }
-    
+
+
+    @Override
+    public void removeMenuByIds(Long[] catIds) {
+        // TODO 1、检查当前删除的菜单，是否被别的地方应用
+        baseMapper.deleteBatchIds(Arrays.asList(catIds.clone()));
+    }
 }

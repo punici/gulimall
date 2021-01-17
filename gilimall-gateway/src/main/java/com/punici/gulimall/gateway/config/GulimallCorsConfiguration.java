@@ -15,17 +15,18 @@ public class GulimallCorsConfiguration {
     @Bean
     public CorsWebFilter corsWebFilter(){
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-        //1、配置跨域
+        CorsConfiguration corsConfiguration=new CorsConfiguration();
+        // 1.配置跨域
+        // 允许那些请求头
         corsConfiguration.addAllowedHeader("*");
+        // 允许那些请求方式
         corsConfiguration.addAllowedMethod("*");
+        //  允许请求来源
         corsConfiguration.addAllowedOrigin("*");
-        //携带cookie允许跨域
+        // 是否允许携带cookie跨越
         corsConfiguration.setAllowCredentials(true);
-
         source.registerCorsConfiguration("/**",corsConfiguration);
         return new CorsWebFilter(source);
     }
+
 }
