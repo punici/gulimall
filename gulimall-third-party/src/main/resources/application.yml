@@ -1,0 +1,22 @@
+server:
+  port: 20000
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  application:
+    name: gulimall-third-party
+  cloud:
+    alicloud:
+      access-key: 自己申请的access-key
+      secret-key: 自己申请的secret-key
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: 123
+    nacos:
+      discovery:
+        server-addr: 192.168.10.10:8848
+logging:
+  level:
+    com.punici.gulimall: debug
+

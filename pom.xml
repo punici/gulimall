@@ -15,6 +15,7 @@
         <module>renren-generator</module>
         <module>gulimall-common</module>
         <module>gilimall-gateway</module>
+        <module>gulimall-third-party</module>
     </modules>
     <name>gulimall</name>
     <description>聚合服务</description>
