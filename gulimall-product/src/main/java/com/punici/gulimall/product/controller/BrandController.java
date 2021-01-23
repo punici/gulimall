@@ -7,6 +7,7 @@ import com.punici.gulimall.common.valid.UpdateStatusGroup;
 import com.punici.gulimall.product.entity.BrandEntity;
 import com.punici.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,11 +81,11 @@ public class BrandController
      * 修改
      */
     @RequestMapping("/update")
+    @Transactional
     // @RequiresPermissions("product:brand:update")
     public Result update(@RequestBody BrandEntity brand)
     {
-        brandService.updateById(brand);
-        
+        brandService.updateDetail(brand);
         return Result.ok();
     }
 

@@ -31,7 +31,7 @@ public class GulimallExceptionControllerAdvice
     @ExceptionHandler(value = Throwable.class)
     public Result handleException(Throwable e)
     {
-        
+        LOGGER.error("系统未知错误:",e);
         return Result.error(BizCodeEnume.UNKNOW_EXCEPTION.getCode(),BizCodeEnume.UNKNOW_EXCEPTION.getMsg());
     }
 }

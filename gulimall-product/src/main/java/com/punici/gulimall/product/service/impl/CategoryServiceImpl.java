@@ -7,9 +7,11 @@ import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.common.utils.Query;
 import com.punici.gulimall.product.dao.CategoryDao;
 import com.punici.gulimall.product.entity.CategoryEntity;
+import com.punici.gulimall.product.service.CategoryBrandRelationService;
 import com.punici.gulimall.product.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -20,7 +22,10 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryServiceImpl.class);
-    
+
+    @Autowired
+    CategoryBrandRelationService categoryBrandRelationService;
+
     @Override
     public PageResult queryPage(Map<String, Object> params)
     {
@@ -62,6 +67,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<Long> parentPath = findParentPath(catelogId, paths);
         Collections.reverse(parentPath);
         return parentPath.toArray(new Long[0]);
+    }
+
+    /**
+     * 级联更新
+     * @param category
+     */
+    @Override
+    public void updateCascad(CategoryEntity category)
+    {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category);
     }
     
     private List<Long> findParentPath(Long catelogId, List<Long> paths)

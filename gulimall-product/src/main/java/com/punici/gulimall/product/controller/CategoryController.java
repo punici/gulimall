@@ -4,6 +4,7 @@ import com.punici.gulimall.common.utils.Result;
 import com.punici.gulimall.product.entity.CategoryEntity;
 import com.punici.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -61,10 +62,12 @@ public class CategoryController
      * 修改
      */
     @RequestMapping("/update")
+    @Transactional
     // @RequiresPermissions("product:category:update")
     public Result update(@RequestBody CategoryEntity category)
     {
         categoryService.updateById(category);
+        categoryService.updateCascad(category);
         return Result.ok();
     }
     
