@@ -5,7 +5,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.common.utils.Query;
 
 import com.punici.gulimall.ware.dao.PurchaseDao;
@@ -17,13 +17,13 @@ import com.punici.gulimall.ware.service.PurchaseService;
 public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity> implements PurchaseService {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageResult queryPage(Map<String, Object> params) {
         IPage<PurchaseEntity> page = this.page(
                 new Query<PurchaseEntity>().getPage(params),
                 new QueryWrapper<PurchaseEntity>()
         );
 
-        return new PageUtils(page);
+        return new PageResult(page);
     }
 
 }

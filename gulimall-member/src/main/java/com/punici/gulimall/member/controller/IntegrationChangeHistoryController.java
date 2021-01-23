@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.IntegrationChangeHistoryEntity;
 import com.punici.gulimall.member.service.IntegrationChangeHistoryService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class IntegrationChangeHistoryController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:integrationchangehistory:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = integrationChangeHistoryService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = integrationChangeHistoryService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class IntegrationChangeHistoryController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:integrationchangehistory:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		IntegrationChangeHistoryEntity integrationChangeHistory = integrationChangeHistoryService.getById(id);
 
-        return R.ok().put("integrationChangeHistory", integrationChangeHistory);
+        return Result.ok().put("integrationChangeHistory", integrationChangeHistory);
     }
 
     /**
@@ -58,10 +58,10 @@ public class IntegrationChangeHistoryController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:integrationchangehistory:save")
-    public R save(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
+    public Result save(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
 		integrationChangeHistoryService.save(integrationChangeHistory);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class IntegrationChangeHistoryController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:integrationchangehistory:update")
-    public R update(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
+    public Result update(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
 		integrationChangeHistoryService.updateById(integrationChangeHistory);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class IntegrationChangeHistoryController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:integrationchangehistory:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		integrationChangeHistoryService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

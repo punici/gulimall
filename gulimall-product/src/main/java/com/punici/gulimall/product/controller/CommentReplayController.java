@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.product.entity.CommentReplayEntity;
 import com.punici.gulimall.product.service.CommentReplayService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class CommentReplayController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:commentreplay:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = commentReplayService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = commentReplayService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class CommentReplayController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("product:commentreplay:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		CommentReplayEntity commentReplay = commentReplayService.getById(id);
 
-        return R.ok().put("commentReplay", commentReplay);
+        return Result.ok().put("commentReplay", commentReplay);
     }
 
     /**
@@ -58,10 +58,10 @@ public class CommentReplayController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:commentreplay:save")
-    public R save(@RequestBody CommentReplayEntity commentReplay){
+    public Result save(@RequestBody CommentReplayEntity commentReplay){
 		commentReplayService.save(commentReplay);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class CommentReplayController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:commentreplay:update")
-    public R update(@RequestBody CommentReplayEntity commentReplay){
+    public Result update(@RequestBody CommentReplayEntity commentReplay){
 		commentReplayService.updateById(commentReplay);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class CommentReplayController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:commentreplay:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		commentReplayService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

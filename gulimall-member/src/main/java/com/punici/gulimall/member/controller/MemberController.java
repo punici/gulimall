@@ -1,7 +1,7 @@
 package com.punici.gulimall.member.controller;
 
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 import com.punici.gulimall.member.entity.MemberEntity;
 import com.punici.gulimall.member.feign.CouponFeignService;
 import com.punici.gulimall.member.service.MemberService;
@@ -30,11 +30,11 @@ public class MemberController {
     private CouponFeignService couponFeignService;
 
     @GetMapping("/test")
-    public R test(){
+    public Result test(){
         MemberEntity memberEntity=new MemberEntity();
         memberEntity.setNickname("张三李四");
-        R r = couponFeignService.memberCoupons();
-        return Objects.requireNonNull(R.ok().put("member", memberEntity)).put("coupons",r.get("coupons"));
+        Result r = couponFeignService.memberCoupons();
+        return Objects.requireNonNull(Result.ok().put("member", memberEntity)).put("coupons",r.get("coupons"));
     }
 
     /**
@@ -42,10 +42,10 @@ public class MemberController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:member:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = memberService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = memberService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -54,10 +54,10 @@ public class MemberController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:member:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		MemberEntity member = memberService.getById(id);
 
-        return R.ok().put("member", member);
+        return Result.ok().put("member", member);
     }
 
     /**
@@ -65,10 +65,10 @@ public class MemberController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:member:save")
-    public R save(@RequestBody MemberEntity member){
+    public Result save(@RequestBody MemberEntity member){
 		memberService.save(member);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -76,10 +76,10 @@ public class MemberController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:member:update")
-    public R update(@RequestBody MemberEntity member){
+    public Result update(@RequestBody MemberEntity member){
 		memberService.updateById(member);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -87,10 +87,10 @@ public class MemberController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:member:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		memberService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

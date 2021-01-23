@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.product.entity.SkuImagesEntity;
 import com.punici.gulimall.product.service.SkuImagesService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class SkuImagesController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:skuimages:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = skuImagesService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = skuImagesService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class SkuImagesController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("product:skuimages:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		SkuImagesEntity skuImages = skuImagesService.getById(id);
 
-        return R.ok().put("skuImages", skuImages);
+        return Result.ok().put("skuImages", skuImages);
     }
 
     /**
@@ -58,10 +58,10 @@ public class SkuImagesController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:skuimages:save")
-    public R save(@RequestBody SkuImagesEntity skuImages){
+    public Result save(@RequestBody SkuImagesEntity skuImages){
 		skuImagesService.save(skuImages);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class SkuImagesController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:skuimages:update")
-    public R update(@RequestBody SkuImagesEntity skuImages){
+    public Result update(@RequestBody SkuImagesEntity skuImages){
 		skuImagesService.updateById(skuImages);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class SkuImagesController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:skuimages:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		skuImagesService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

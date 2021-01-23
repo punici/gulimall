@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.order.entity.OrderOperateHistoryEntity;
 import com.punici.gulimall.order.service.OrderOperateHistoryService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class OrderOperateHistoryController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:orderoperatehistory:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = orderOperateHistoryService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = orderOperateHistoryService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class OrderOperateHistoryController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:orderoperatehistory:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		OrderOperateHistoryEntity orderOperateHistory = orderOperateHistoryService.getById(id);
 
-        return R.ok().put("orderOperateHistory", orderOperateHistory);
+        return Result.ok().put("orderOperateHistory", orderOperateHistory);
     }
 
     /**
@@ -58,10 +58,10 @@ public class OrderOperateHistoryController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:orderoperatehistory:save")
-    public R save(@RequestBody OrderOperateHistoryEntity orderOperateHistory){
+    public Result save(@RequestBody OrderOperateHistoryEntity orderOperateHistory){
 		orderOperateHistoryService.save(orderOperateHistory);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class OrderOperateHistoryController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:orderoperatehistory:update")
-    public R update(@RequestBody OrderOperateHistoryEntity orderOperateHistory){
+    public Result update(@RequestBody OrderOperateHistoryEntity orderOperateHistory){
 		orderOperateHistoryService.updateById(orderOperateHistory);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class OrderOperateHistoryController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:orderoperatehistory:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		orderOperateHistoryService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

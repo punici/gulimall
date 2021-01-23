@@ -5,7 +5,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.common.utils.Query;
 
 import com.punici.gulimall.product.dao.BrandDao;
@@ -17,13 +17,13 @@ import com.punici.gulimall.product.service.BrandService;
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageResult queryPage(Map<String, Object> params) {
         IPage<BrandEntity> page = this.page(
                 new Query<BrandEntity>().getPage(params),
                 new QueryWrapper<BrandEntity>()
         );
 
-        return new PageUtils(page);
+        return new PageResult(page);
     }
 
 }

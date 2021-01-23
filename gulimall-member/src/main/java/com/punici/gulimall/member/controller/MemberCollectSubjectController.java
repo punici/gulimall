@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.MemberCollectSubjectEntity;
 import com.punici.gulimall.member.service.MemberCollectSubjectService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class MemberCollectSubjectController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:membercollectsubject:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = memberCollectSubjectService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = memberCollectSubjectService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberCollectSubjectController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:membercollectsubject:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		MemberCollectSubjectEntity memberCollectSubject = memberCollectSubjectService.getById(id);
 
-        return R.ok().put("memberCollectSubject", memberCollectSubject);
+        return Result.ok().put("memberCollectSubject", memberCollectSubject);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberCollectSubjectController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:membercollectsubject:save")
-    public R save(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
+    public Result save(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
 		memberCollectSubjectService.save(memberCollectSubject);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberCollectSubjectController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:membercollectsubject:update")
-    public R update(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
+    public Result update(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
 		memberCollectSubjectService.updateById(memberCollectSubject);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberCollectSubjectController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:membercollectsubject:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		memberCollectSubjectService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

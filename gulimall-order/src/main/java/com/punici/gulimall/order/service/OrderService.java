@@ -1,7 +1,7 @@
 package com.punici.gulimall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.order.entity.OrderEntity;
 
 import java.util.Map;
@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageResult queryPage(Map<String, Object> params);
 }
 

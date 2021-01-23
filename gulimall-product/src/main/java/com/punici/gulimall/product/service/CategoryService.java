@@ -1,7 +1,7 @@
 package com.punici.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.product.entity.CategoryEntity;
 
 import java.util.List;
@@ -16,10 +16,12 @@ import java.util.Map;
  */
 public interface CategoryService extends IService<CategoryEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageResult queryPage(Map<String, Object> params);
 
     List<CategoryEntity> listWithTree();
 
     void removeMenuByIds(Long[] catIds);
+
+    Long[] findCategoryPath(Long catelogId);
 }
 

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.ware.entity.WareInfoEntity;
 import com.punici.gulimall.ware.service.WareInfoService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class WareInfoController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("ware:wareinfo:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = wareInfoService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = wareInfoService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class WareInfoController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("ware:wareinfo:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		WareInfoEntity wareInfo = wareInfoService.getById(id);
 
-        return R.ok().put("wareInfo", wareInfo);
+        return Result.ok().put("wareInfo", wareInfo);
     }
 
     /**
@@ -58,10 +58,10 @@ public class WareInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("ware:wareinfo:save")
-    public R save(@RequestBody WareInfoEntity wareInfo){
+    public Result save(@RequestBody WareInfoEntity wareInfo){
 		wareInfoService.save(wareInfo);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class WareInfoController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("ware:wareinfo:update")
-    public R update(@RequestBody WareInfoEntity wareInfo){
+    public Result update(@RequestBody WareInfoEntity wareInfo){
 		wareInfoService.updateById(wareInfo);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class WareInfoController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:wareinfo:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		wareInfoService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

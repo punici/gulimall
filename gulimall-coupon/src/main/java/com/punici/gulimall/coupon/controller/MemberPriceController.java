@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.coupon.entity.MemberPriceEntity;
 import com.punici.gulimall.coupon.service.MemberPriceService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class MemberPriceController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:memberprice:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = memberPriceService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = memberPriceService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberPriceController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:memberprice:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		MemberPriceEntity memberPrice = memberPriceService.getById(id);
 
-        return R.ok().put("memberPrice", memberPrice);
+        return Result.ok().put("memberPrice", memberPrice);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberPriceController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:memberprice:save")
-    public R save(@RequestBody MemberPriceEntity memberPrice){
+    public Result save(@RequestBody MemberPriceEntity memberPrice){
 		memberPriceService.save(memberPrice);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberPriceController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:memberprice:update")
-    public R update(@RequestBody MemberPriceEntity memberPrice){
+    public Result update(@RequestBody MemberPriceEntity memberPrice){
 		memberPriceService.updateById(memberPrice);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberPriceController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:memberprice:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		memberPriceService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }

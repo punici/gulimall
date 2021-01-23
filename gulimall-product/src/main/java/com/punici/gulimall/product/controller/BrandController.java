@@ -1,7 +1,7 @@
 package com.punici.gulimall.product.controller;
 
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 import com.punici.gulimall.common.valid.AddGroup;
 import com.punici.gulimall.common.valid.UpdateStatusGroup;
 import com.punici.gulimall.product.entity.BrandEntity;
@@ -32,11 +32,11 @@ public class BrandController
      */
     @RequestMapping("/list")
     // @RequiresPermissions("product:brand:list")
-    public R list(@RequestParam Map<String, Object> params)
+    public Result list(@RequestParam Map<String, Object> params)
     {
-        PageUtils page = brandService.queryPage(params);
+        PageResult page = brandService.queryPage(params);
         
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
     
     /**
@@ -44,11 +44,11 @@ public class BrandController
      */
     @RequestMapping("/info/{brandId}")
     // @RequiresPermissions("product:brand:info")
-    public R info(@PathVariable("brandId") Long brandId)
+    public Result info(@PathVariable("brandId") Long brandId)
     {
         BrandEntity brand = brandService.getById(brandId);
         
-        return R.ok().put("brand", brand);
+        return Result.ok().put("brand", brand);
     }
     
     /**
@@ -56,7 +56,7 @@ public class BrandController
      */
     @RequestMapping("/save")
     // @RequiresPermissions("product:brand:save")
-    public R save(@Validated(AddGroup.class) @RequestBody BrandEntity brand)//BindingResult result)
+    public Result save(@Validated(AddGroup.class) @RequestBody BrandEntity brand)//BindingResult result)
     {
 //        Map<String, String> errorMap = new HashMap<>();
 //        if(result.hasErrors())
@@ -73,7 +73,7 @@ public class BrandController
 //        }
         brandService.save(brand);
         
-        return R.ok();
+        return Result.ok();
     }
     
     /**
@@ -81,11 +81,11 @@ public class BrandController
      */
     @RequestMapping("/update")
     // @RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand)
+    public Result update(@RequestBody BrandEntity brand)
     {
         brandService.updateById(brand);
         
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -93,11 +93,11 @@ public class BrandController
      */
     @RequestMapping("/update/status")
     // @RequiresPermissions("product:brand:update")
-    public R updateBrandStatus(@Validated(UpdateStatusGroup.class) @RequestBody BrandEntity brand)
+    public Result updateBrandStatus(@Validated(UpdateStatusGroup.class) @RequestBody BrandEntity brand)
     {
         brandService.updateById(brand);
 
-        return R.ok();
+        return Result.ok();
     }
     
     /**
@@ -105,11 +105,11 @@ public class BrandController
      */
     @RequestMapping("/delete")
     // @RequiresPermissions("product:brand:delete")
-    public R delete(@RequestBody Long[] brandIds)
+    public Result delete(@RequestBody Long[] brandIds)
     {
         brandService.removeByIds(Arrays.asList(brandIds));
         
-        return R.ok();
+        return Result.ok();
     }
     
 }

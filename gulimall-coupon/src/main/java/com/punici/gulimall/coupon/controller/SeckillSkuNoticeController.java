@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.coupon.entity.SeckillSkuNoticeEntity;
 import com.punici.gulimall.coupon.service.SeckillSkuNoticeService;
-import com.punici.gulimall.common.utils.PageUtils;
-import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.Result;
 
 
 
@@ -35,10 +35,10 @@ public class SeckillSkuNoticeController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:seckillskunotice:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = seckillSkuNoticeService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params){
+        PageResult page = seckillSkuNoticeService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class SeckillSkuNoticeController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:seckillskunotice:info")
-    public R info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id){
 		SeckillSkuNoticeEntity seckillSkuNotice = seckillSkuNoticeService.getById(id);
 
-        return R.ok().put("seckillSkuNotice", seckillSkuNotice);
+        return Result.ok().put("seckillSkuNotice", seckillSkuNotice);
     }
 
     /**
@@ -58,10 +58,10 @@ public class SeckillSkuNoticeController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:seckillskunotice:save")
-    public R save(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
+    public Result save(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
 		seckillSkuNoticeService.save(seckillSkuNotice);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class SeckillSkuNoticeController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:seckillskunotice:update")
-    public R update(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
+    public Result update(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
 		seckillSkuNoticeService.updateById(seckillSkuNotice);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class SeckillSkuNoticeController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:seckillskunotice:delete")
-    public R delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody Long[] ids){
 		seckillSkuNoticeService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }
