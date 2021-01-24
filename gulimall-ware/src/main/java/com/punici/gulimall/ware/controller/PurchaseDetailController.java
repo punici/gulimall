@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.ware.entity.PurchaseDetailEntity;
 import com.punici.gulimall.ware.service.PurchaseDetailService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("ware:purchasedetail:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = purchaseDetailService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = purchaseDetailService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("ware:purchasedetail:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		PurchaseDetailEntity purchaseDetail = purchaseDetailService.getById(id);
 
-        return Result.ok().put("purchaseDetail", purchaseDetail);
+        return R.ok().put("purchaseDetail", purchaseDetail);
     }
 
     /**
@@ -58,10 +58,10 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchasedetail:save")
-    public Result save(@RequestBody PurchaseDetailEntity purchaseDetail){
+    public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
 		purchaseDetailService.save(purchaseDetail);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("ware:purchasedetail:update")
-    public Result update(@RequestBody PurchaseDetailEntity purchaseDetail){
+    public R update(@RequestBody PurchaseDetailEntity purchaseDetail){
 		purchaseDetailService.updateById(purchaseDetail);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:purchasedetail:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		purchaseDetailService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

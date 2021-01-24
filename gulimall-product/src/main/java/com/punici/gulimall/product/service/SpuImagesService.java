@@ -1,9 +1,9 @@
 package com.punici.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.product.entity.SpuImagesEntity;
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +13,11 @@ import java.util.Map;
  * @email punici@163.com
  * @date 2021-01-10 19:53:51
  */
-public interface SpuImagesService extends IService<SpuImagesEntity> {
-
-    PageResult queryPage(Map<String, Object> params);
+public interface SpuImagesService extends IService<SpuImagesEntity>
+{
+    
+    PageUtils queryPage(Map<String, Object> params);
+    
+    void saveImages(Long id, List<String> images);
+    
 }
-

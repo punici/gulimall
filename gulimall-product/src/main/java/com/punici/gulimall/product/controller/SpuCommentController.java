@@ -1,21 +1,13 @@
 package com.punici.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 import com.punici.gulimall.product.entity.SpuCommentEntity;
 import com.punici.gulimall.product.service.SpuCommentService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
-
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * 商品评价
@@ -26,64 +18,63 @@ import com.punici.gulimall.common.utils.Result;
  */
 @RestController
 @RequestMapping("product/spucomment")
-public class SpuCommentController {
+public class SpuCommentController
+{
     @Autowired
     private SpuCommentService spuCommentService;
-
+    
     /**
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("product:spucomment:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = spuCommentService.queryPage(params);
-
-        return Result.ok().put("page", page);
+    // @RequiresPermissions("product:spucomment:list")
+    public R list(@RequestParam Map<String, Object> params)
+    {
+        PageUtils page = spuCommentService.queryPage(params);
+        return R.ok().put("page", page);
     }
-
-
+    
     /**
      * 信息
      */
     @RequestMapping("/info/{id}")
-    //@RequiresPermissions("product:spucomment:info")
-    public Result info(@PathVariable("id") Long id){
-		SpuCommentEntity spuComment = spuCommentService.getById(id);
-
-        return Result.ok().put("spuComment", spuComment);
+    // @RequiresPermissions("product:spucomment:info")
+    public R info(@PathVariable("id") Long id)
+    {
+        SpuCommentEntity spuComment = spuCommentService.getById(id);
+        return R.ok().put("spuComment", spuComment);
     }
-
+    
     /**
      * 保存
      */
     @RequestMapping("/save")
-    //@RequiresPermissions("product:spucomment:save")
-    public Result save(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.save(spuComment);
-
-        return Result.ok();
+    // @RequiresPermissions("product:spucomment:save")
+    public R save(@RequestBody SpuCommentEntity spuComment)
+    {
+        spuCommentService.save(spuComment);
+        return R.ok();
     }
-
+    
     /**
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("product:spucomment:update")
-    public Result update(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.updateById(spuComment);
-
-        return Result.ok();
+    // @RequiresPermissions("product:spucomment:update")
+    public R update(@RequestBody SpuCommentEntity spuComment)
+    {
+        spuCommentService.updateById(spuComment);
+        return R.ok();
     }
-
+    
     /**
      * 删除
      */
     @RequestMapping("/delete")
-    //@RequiresPermissions("product:spucomment:delete")
-    public Result delete(@RequestBody Long[] ids){
-		spuCommentService.removeByIds(Arrays.asList(ids));
-
-        return Result.ok();
+    // @RequiresPermissions("product:spucomment:delete")
+    public R delete(@RequestBody Long[] ids)
+    {
+        spuCommentService.removeByIds(Arrays.asList(ids));
+        return R.ok();
     }
-
 }

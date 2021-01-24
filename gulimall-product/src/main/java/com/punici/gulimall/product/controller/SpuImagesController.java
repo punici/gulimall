@@ -1,21 +1,13 @@
 package com.punici.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 import com.punici.gulimall.product.entity.SpuImagesEntity;
 import com.punici.gulimall.product.service.SpuImagesService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
-
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * spu图片
@@ -35,10 +27,9 @@ public class SpuImagesController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:spuimages:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = spuImagesService.queryPage(params);
-
-        return Result.ok().put("page", page);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = spuImagesService.queryPage(params);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +38,9 @@ public class SpuImagesController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("product:spuimages:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		SpuImagesEntity spuImages = spuImagesService.getById(id);
-
-        return Result.ok().put("spuImages", spuImages);
+        return R.ok().put("spuImages", spuImages);
     }
 
     /**
@@ -58,10 +48,9 @@ public class SpuImagesController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:spuimages:save")
-    public Result save(@RequestBody SpuImagesEntity spuImages){
+    public R save(@RequestBody SpuImagesEntity spuImages){
 		spuImagesService.save(spuImages);
-
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +58,9 @@ public class SpuImagesController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:spuimages:update")
-    public Result update(@RequestBody SpuImagesEntity spuImages){
+    public R update(@RequestBody SpuImagesEntity spuImages){
 		spuImagesService.updateById(spuImages);
-
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +68,8 @@ public class SpuImagesController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:spuimages:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		spuImagesService.removeByIds(Arrays.asList(ids));
-
-        return Result.ok();
+        return R.ok();
     }
-
 }

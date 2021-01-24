@@ -5,7 +5,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.common.utils.Query;
 
 import com.punici.gulimall.order.dao.PaymentInfoDao;
@@ -17,13 +17,13 @@ import com.punici.gulimall.order.service.PaymentInfoService;
 public class PaymentInfoServiceImpl extends ServiceImpl<PaymentInfoDao, PaymentInfoEntity> implements PaymentInfoService {
 
     @Override
-    public PageResult queryPage(Map<String, Object> params) {
+    public PageUtils queryPage(Map<String, Object> params) {
         IPage<PaymentInfoEntity> page = this.page(
                 new Query<PaymentInfoEntity>().getPage(params),
                 new QueryWrapper<PaymentInfoEntity>()
         );
 
-        return new PageResult(page);
+        return new PageUtils(page);
     }
 
 }

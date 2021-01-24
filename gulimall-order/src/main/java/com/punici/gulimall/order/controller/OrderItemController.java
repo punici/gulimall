@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.order.entity.OrderItemEntity;
 import com.punici.gulimall.order.service.OrderItemService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class OrderItemController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:orderitem:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = orderItemService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = orderItemService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class OrderItemController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:orderitem:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		OrderItemEntity orderItem = orderItemService.getById(id);
 
-        return Result.ok().put("orderItem", orderItem);
+        return R.ok().put("orderItem", orderItem);
     }
 
     /**
@@ -58,10 +58,10 @@ public class OrderItemController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:orderitem:save")
-    public Result save(@RequestBody OrderItemEntity orderItem){
+    public R save(@RequestBody OrderItemEntity orderItem){
 		orderItemService.save(orderItem);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class OrderItemController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:orderitem:update")
-    public Result update(@RequestBody OrderItemEntity orderItem){
+    public R update(@RequestBody OrderItemEntity orderItem){
 		orderItemService.updateById(orderItem);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class OrderItemController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:orderitem:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		orderItemService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

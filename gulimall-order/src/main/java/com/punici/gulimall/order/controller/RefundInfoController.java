@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.order.entity.RefundInfoEntity;
 import com.punici.gulimall.order.service.RefundInfoService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class RefundInfoController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:refundinfo:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = refundInfoService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = refundInfoService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class RefundInfoController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:refundinfo:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		RefundInfoEntity refundInfo = refundInfoService.getById(id);
 
-        return Result.ok().put("refundInfo", refundInfo);
+        return R.ok().put("refundInfo", refundInfo);
     }
 
     /**
@@ -58,10 +58,10 @@ public class RefundInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:refundinfo:save")
-    public Result save(@RequestBody RefundInfoEntity refundInfo){
+    public R save(@RequestBody RefundInfoEntity refundInfo){
 		refundInfoService.save(refundInfo);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class RefundInfoController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:refundinfo:update")
-    public Result update(@RequestBody RefundInfoEntity refundInfo){
+    public R update(@RequestBody RefundInfoEntity refundInfo){
 		refundInfoService.updateById(refundInfo);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class RefundInfoController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:refundinfo:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		refundInfoService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

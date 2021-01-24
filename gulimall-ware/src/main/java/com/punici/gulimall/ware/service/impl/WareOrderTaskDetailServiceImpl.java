@@ -5,7 +5,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.common.utils.Query;
 
 import com.punici.gulimall.ware.dao.WareOrderTaskDetailDao;
@@ -17,13 +17,13 @@ import com.punici.gulimall.ware.service.WareOrderTaskDetailService;
 public class WareOrderTaskDetailServiceImpl extends ServiceImpl<WareOrderTaskDetailDao, WareOrderTaskDetailEntity> implements WareOrderTaskDetailService {
 
     @Override
-    public PageResult queryPage(Map<String, Object> params) {
+    public PageUtils queryPage(Map<String, Object> params) {
         IPage<WareOrderTaskDetailEntity> page = this.page(
                 new Query<WareOrderTaskDetailEntity>().getPage(params),
                 new QueryWrapper<WareOrderTaskDetailEntity>()
         );
 
-        return new PageResult(page);
+        return new PageUtils(page);
     }
 
 }

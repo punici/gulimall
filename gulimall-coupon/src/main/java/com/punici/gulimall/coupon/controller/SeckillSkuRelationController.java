@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.coupon.entity.SeckillSkuRelationEntity;
 import com.punici.gulimall.coupon.service.SeckillSkuRelationService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class SeckillSkuRelationController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:seckillskurelation:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = seckillSkuRelationService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = seckillSkuRelationService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class SeckillSkuRelationController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:seckillskurelation:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		SeckillSkuRelationEntity seckillSkuRelation = seckillSkuRelationService.getById(id);
 
-        return Result.ok().put("seckillSkuRelation", seckillSkuRelation);
+        return R.ok().put("seckillSkuRelation", seckillSkuRelation);
     }
 
     /**
@@ -58,10 +58,10 @@ public class SeckillSkuRelationController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:seckillskurelation:save")
-    public Result save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
+    public R save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
 		seckillSkuRelationService.save(seckillSkuRelation);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class SeckillSkuRelationController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:seckillskurelation:update")
-    public Result update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
+    public R update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
 		seckillSkuRelationService.updateById(seckillSkuRelation);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class SeckillSkuRelationController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:seckillskurelation:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		seckillSkuRelationService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

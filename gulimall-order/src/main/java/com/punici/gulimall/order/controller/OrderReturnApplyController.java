@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.order.entity.OrderReturnApplyEntity;
 import com.punici.gulimall.order.service.OrderReturnApplyService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class OrderReturnApplyController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:orderreturnapply:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = orderReturnApplyService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = orderReturnApplyService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class OrderReturnApplyController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:orderreturnapply:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		OrderReturnApplyEntity orderReturnApply = orderReturnApplyService.getById(id);
 
-        return Result.ok().put("orderReturnApply", orderReturnApply);
+        return R.ok().put("orderReturnApply", orderReturnApply);
     }
 
     /**
@@ -58,10 +58,10 @@ public class OrderReturnApplyController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:orderreturnapply:save")
-    public Result save(@RequestBody OrderReturnApplyEntity orderReturnApply){
+    public R save(@RequestBody OrderReturnApplyEntity orderReturnApply){
 		orderReturnApplyService.save(orderReturnApply);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class OrderReturnApplyController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:orderreturnapply:update")
-    public Result update(@RequestBody OrderReturnApplyEntity orderReturnApply){
+    public R update(@RequestBody OrderReturnApplyEntity orderReturnApply){
 		orderReturnApplyService.updateById(orderReturnApply);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class OrderReturnApplyController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:orderreturnapply:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		orderReturnApplyService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

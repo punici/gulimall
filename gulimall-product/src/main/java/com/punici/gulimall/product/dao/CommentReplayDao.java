@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-01-10 19:53:51
  */
 @Mapper
-public interface CommentReplayDao extends BaseMapper<CommentReplayEntity> {
-	
+public interface CommentReplayDao extends BaseMapper<CommentReplayEntity>
+{
 }

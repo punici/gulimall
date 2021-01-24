@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.MemberReceiveAddressEntity;
 import com.punici.gulimall.member.service.MemberReceiveAddressService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class MemberReceiveAddressController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:memberreceiveaddress:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = memberReceiveAddressService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = memberReceiveAddressService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberReceiveAddressController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:memberreceiveaddress:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		MemberReceiveAddressEntity memberReceiveAddress = memberReceiveAddressService.getById(id);
 
-        return Result.ok().put("memberReceiveAddress", memberReceiveAddress);
+        return R.ok().put("memberReceiveAddress", memberReceiveAddress);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberReceiveAddressController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:memberreceiveaddress:save")
-    public Result save(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
+    public R save(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
 		memberReceiveAddressService.save(memberReceiveAddress);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberReceiveAddressController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:memberreceiveaddress:update")
-    public Result update(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
+    public R update(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
 		memberReceiveAddressService.updateById(memberReceiveAddress);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberReceiveAddressController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:memberreceiveaddress:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		memberReceiveAddressService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

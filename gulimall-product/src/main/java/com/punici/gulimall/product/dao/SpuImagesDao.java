@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-01-10 19:53:51
  */
 @Mapper
-public interface SpuImagesDao extends BaseMapper<SpuImagesEntity> {
-	
+public interface SpuImagesDao extends BaseMapper<SpuImagesEntity>
+{
 }

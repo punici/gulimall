@@ -1,7 +1,7 @@
 package com.punici.gulimall.coupon.controller;
 
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 import com.punici.gulimall.coupon.entity.CouponHistoryEntity;
 import com.punici.gulimall.coupon.service.CouponHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,10 @@ public class CouponHistoryController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:couponhistory:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = couponHistoryService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = couponHistoryService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -42,10 +42,10 @@ public class CouponHistoryController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:couponhistory:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		CouponHistoryEntity couponHistory = couponHistoryService.getById(id);
 
-        return Result.ok().put("couponHistory", couponHistory);
+        return R.ok().put("couponHistory", couponHistory);
     }
 
     /**
@@ -53,10 +53,10 @@ public class CouponHistoryController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:couponhistory:save")
-    public Result save(@RequestBody CouponHistoryEntity couponHistory){
+    public R save(@RequestBody CouponHistoryEntity couponHistory){
 		couponHistoryService.save(couponHistory);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -64,10 +64,10 @@ public class CouponHistoryController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:couponhistory:update")
-    public Result update(@RequestBody CouponHistoryEntity couponHistory){
+    public R update(@RequestBody CouponHistoryEntity couponHistory){
 		couponHistoryService.updateById(couponHistory);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -75,10 +75,10 @@ public class CouponHistoryController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:couponhistory:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		couponHistoryService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

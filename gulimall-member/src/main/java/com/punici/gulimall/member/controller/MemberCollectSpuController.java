@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.MemberCollectSpuEntity;
 import com.punici.gulimall.member.service.MemberCollectSpuService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class MemberCollectSpuController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:membercollectspu:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = memberCollectSpuService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = memberCollectSpuService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberCollectSpuController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:membercollectspu:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		MemberCollectSpuEntity memberCollectSpu = memberCollectSpuService.getById(id);
 
-        return Result.ok().put("memberCollectSpu", memberCollectSpu);
+        return R.ok().put("memberCollectSpu", memberCollectSpu);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberCollectSpuController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:membercollectspu:save")
-    public Result save(@RequestBody MemberCollectSpuEntity memberCollectSpu){
+    public R save(@RequestBody MemberCollectSpuEntity memberCollectSpu){
 		memberCollectSpuService.save(memberCollectSpu);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberCollectSpuController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:membercollectspu:update")
-    public Result update(@RequestBody MemberCollectSpuEntity memberCollectSpu){
+    public R update(@RequestBody MemberCollectSpuEntity memberCollectSpu){
 		memberCollectSpuService.updateById(memberCollectSpu);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberCollectSpuController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:membercollectspu:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		memberCollectSpuService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

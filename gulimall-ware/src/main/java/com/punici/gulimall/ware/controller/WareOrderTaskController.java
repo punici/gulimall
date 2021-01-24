@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.ware.entity.WareOrderTaskEntity;
 import com.punici.gulimall.ware.service.WareOrderTaskService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("ware:wareordertask:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = wareOrderTaskService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = wareOrderTaskService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("ware:wareordertask:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
 
-        return Result.ok().put("wareOrderTask", wareOrderTask);
+        return R.ok().put("wareOrderTask", wareOrderTask);
     }
 
     /**
@@ -58,10 +58,10 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("ware:wareordertask:save")
-    public Result save(@RequestBody WareOrderTaskEntity wareOrderTask){
+    public R save(@RequestBody WareOrderTaskEntity wareOrderTask){
 		wareOrderTaskService.save(wareOrderTask);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("ware:wareordertask:update")
-    public Result update(@RequestBody WareOrderTaskEntity wareOrderTask){
+    public R update(@RequestBody WareOrderTaskEntity wareOrderTask){
 		wareOrderTaskService.updateById(wareOrderTask);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:wareordertask:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		wareOrderTaskService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

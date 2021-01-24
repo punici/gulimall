@@ -1,7 +1,7 @@
 package com.punici.gulimall.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.member.entity.MemberCollectSpuEntity;
 
 import java.util.Map;
@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface MemberCollectSpuService extends IService<MemberCollectSpuEntity> {
 
-    PageResult queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params);
 }
 

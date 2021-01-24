@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.order.entity.OrderSettingEntity;
 import com.punici.gulimall.order.service.OrderSettingService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class OrderSettingController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("order:ordersetting:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = orderSettingService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = orderSettingService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class OrderSettingController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("order:ordersetting:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		OrderSettingEntity orderSetting = orderSettingService.getById(id);
 
-        return Result.ok().put("orderSetting", orderSetting);
+        return R.ok().put("orderSetting", orderSetting);
     }
 
     /**
@@ -58,10 +58,10 @@ public class OrderSettingController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("order:ordersetting:save")
-    public Result save(@RequestBody OrderSettingEntity orderSetting){
+    public R save(@RequestBody OrderSettingEntity orderSetting){
 		orderSettingService.save(orderSetting);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class OrderSettingController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("order:ordersetting:update")
-    public Result update(@RequestBody OrderSettingEntity orderSetting){
+    public R update(@RequestBody OrderSettingEntity orderSetting){
 		orderSettingService.updateById(orderSetting);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class OrderSettingController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("order:ordersetting:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		orderSettingService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

@@ -1,13 +1,16 @@
 package com.punici.gulimall.product.controller;
 
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.R;
 import com.punici.gulimall.product.entity.CategoryEntity;
 import com.punici.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商品三级分类
@@ -24,14 +27,13 @@ public class CategoryController
     private CategoryService categoryService;
     
     /**
-     * 查出所有分类以及子分类列表，以树形结构组装起来
+     * 查出所有分类以及子分类，以树形结构组装起来
      */
     @RequestMapping("/list/tree")
-    // @RequiresPermissions("product:category:list")
-    public Result list(@RequestParam Map<String, Object> params)
+    public R list()
     {
         List<CategoryEntity> entities = categoryService.listWithTree();
-        return Result.ok().put("data", entities);
+        return R.ok().put("data", entities);
     }
     
     /**
@@ -39,11 +41,10 @@ public class CategoryController
      */
     @RequestMapping("/info/{catId}")
     // @RequiresPermissions("product:category:info")
-    public Result info(@PathVariable("catId") Long catId)
+    public R info(@PathVariable("catId") Long catId)
     {
         CategoryEntity category = categoryService.getById(catId);
-        
-        return Result.ok().put("data", category);
+        return R.ok().put("data", category);
     }
     
     /**
@@ -51,37 +52,42 @@ public class CategoryController
      */
     @RequestMapping("/save")
     // @RequiresPermissions("product:category:save")
-    public Result save(@RequestBody CategoryEntity category)
+    public R save(@RequestBody CategoryEntity category)
     {
         categoryService.save(category);
-        
-        return Result.ok();
+        return R.ok();
+    }
+    
+    @RequestMapping("/update/sort")
+    // @RequiresPermissions("product:category:update")
+    public R updateSort(@RequestBody CategoryEntity[] category)
+    {
+        categoryService.updateBatchById(Arrays.asList(category));
+        return R.ok();
     }
     
     /**
      * 修改
      */
     @RequestMapping("/update")
-    @Transactional
     // @RequiresPermissions("product:category:update")
-    public Result update(@RequestBody CategoryEntity category)
+    public R update(@RequestBody CategoryEntity category)
     {
-        categoryService.updateById(category);
-        categoryService.updateCascad(category);
-        return Result.ok();
+        categoryService.updateCascade(category);
+        return R.ok();
     }
     
     /**
      * 删除
-     * @RequestBody:获取请求体，必须发送post请求才有 get请求没有 SpringMvc 自动将请求体的数据 ( json ) 转为对应的对象
+     * 
+     * @RequestBody:获取请求体，必须发送POST请求 SpringMVC自动将请求体的数据（json），转为对应的对象
      */
     @RequestMapping("/delete")
     // @RequiresPermissions("product:category:delete")
-    public Result delete(@RequestBody Long[] catIds)
+    public R delete(@RequestBody Long[] catIds)
     {
         // categoryService.removeByIds(Arrays.asList(catIds));
-        categoryService.removeMenuByIds(catIds);
-        return Result.ok();
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
+        return R.ok();
     }
-    
 }

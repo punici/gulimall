@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.coupon.entity.SkuFullReductionEntity;
 import com.punici.gulimall.coupon.service.SkuFullReductionService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class SkuFullReductionController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:skufullreduction:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = skuFullReductionService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = skuFullReductionService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class SkuFullReductionController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:skufullreduction:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		SkuFullReductionEntity skuFullReduction = skuFullReductionService.getById(id);
 
-        return Result.ok().put("skuFullReduction", skuFullReduction);
+        return R.ok().put("skuFullReduction", skuFullReduction);
     }
 
     /**
@@ -58,10 +58,10 @@ public class SkuFullReductionController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:skufullreduction:save")
-    public Result save(@RequestBody SkuFullReductionEntity skuFullReduction){
+    public R save(@RequestBody SkuFullReductionEntity skuFullReduction){
 		skuFullReductionService.save(skuFullReduction);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class SkuFullReductionController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:skufullreduction:update")
-    public Result update(@RequestBody SkuFullReductionEntity skuFullReduction){
+    public R update(@RequestBody SkuFullReductionEntity skuFullReduction){
 		skuFullReductionService.updateById(skuFullReduction);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class SkuFullReductionController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:skufullreduction:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		skuFullReductionService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

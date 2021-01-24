@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.MemberLoginLogEntity;
 import com.punici.gulimall.member.service.MemberLoginLogService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class MemberLoginLogController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:memberloginlog:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = memberLoginLogService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = memberLoginLogService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberLoginLogController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:memberloginlog:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		MemberLoginLogEntity memberLoginLog = memberLoginLogService.getById(id);
 
-        return Result.ok().put("memberLoginLog", memberLoginLog);
+        return R.ok().put("memberLoginLog", memberLoginLog);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberLoginLogController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:memberloginlog:save")
-    public Result save(@RequestBody MemberLoginLogEntity memberLoginLog){
+    public R save(@RequestBody MemberLoginLogEntity memberLoginLog){
 		memberLoginLogService.save(memberLoginLog);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberLoginLogController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:memberloginlog:update")
-    public Result update(@RequestBody MemberLoginLogEntity memberLoginLog){
+    public R update(@RequestBody MemberLoginLogEntity memberLoginLog){
 		memberLoginLogService.updateById(memberLoginLog);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberLoginLogController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:memberloginlog:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		memberLoginLogService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

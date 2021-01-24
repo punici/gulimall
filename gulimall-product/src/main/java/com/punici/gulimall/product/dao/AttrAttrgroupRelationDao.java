@@ -1,10 +1,9 @@
 package com.punici.gulimall.product.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.punici.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 /**
@@ -15,6 +14,7 @@ import java.util.List;
  * @date 2021-01-10 19:53:51
  */
 @Mapper
-public interface AttrAttrgroupRelationDao extends BaseMapper<AttrAttrgroupRelationEntity> {
+public interface AttrAttrgroupRelationDao extends BaseMapper<AttrAttrgroupRelationEntity>
+{
     void deleteBatchRelation(@Param("entities") List<AttrAttrgroupRelationEntity> entities);
 }

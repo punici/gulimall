@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.GrowthChangeHistoryEntity;
 import com.punici.gulimall.member.service.GrowthChangeHistoryService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class GrowthChangeHistoryController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:growthchangehistory:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = growthChangeHistoryService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = growthChangeHistoryService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class GrowthChangeHistoryController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:growthchangehistory:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		GrowthChangeHistoryEntity growthChangeHistory = growthChangeHistoryService.getById(id);
 
-        return Result.ok().put("growthChangeHistory", growthChangeHistory);
+        return R.ok().put("growthChangeHistory", growthChangeHistory);
     }
 
     /**
@@ -58,10 +58,10 @@ public class GrowthChangeHistoryController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:growthchangehistory:save")
-    public Result save(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
+    public R save(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
 		growthChangeHistoryService.save(growthChangeHistory);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class GrowthChangeHistoryController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:growthchangehistory:update")
-    public Result update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
+    public R update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
 		growthChangeHistoryService.updateById(growthChangeHistory);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class GrowthChangeHistoryController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:growthchangehistory:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		growthChangeHistoryService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

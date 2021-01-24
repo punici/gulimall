@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.member.entity.MemberLevelEntity;
 import com.punici.gulimall.member.service.MemberLevelService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class MemberLevelController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("member:memberlevel:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = memberLevelService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = memberLevelService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class MemberLevelController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:memberlevel:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		MemberLevelEntity memberLevel = memberLevelService.getById(id);
 
-        return Result.ok().put("memberLevel", memberLevel);
+        return R.ok().put("memberLevel", memberLevel);
     }
 
     /**
@@ -58,10 +58,10 @@ public class MemberLevelController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("member:memberlevel:save")
-    public Result save(@RequestBody MemberLevelEntity memberLevel){
+    public R save(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.save(memberLevel);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class MemberLevelController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("member:memberlevel:update")
-    public Result update(@RequestBody MemberLevelEntity memberLevel){
+    public R update(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.updateById(memberLevel);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class MemberLevelController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("member:memberlevel:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		memberLevelService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }

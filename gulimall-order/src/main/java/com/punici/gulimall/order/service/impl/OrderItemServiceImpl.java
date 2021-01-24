@@ -5,7 +5,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.common.utils.Query;
 
 import com.punici.gulimall.order.dao.OrderItemDao;
@@ -17,13 +17,13 @@ import com.punici.gulimall.order.service.OrderItemService;
 public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEntity> implements OrderItemService {
 
     @Override
-    public PageResult queryPage(Map<String, Object> params) {
+    public PageUtils queryPage(Map<String, Object> params) {
         IPage<OrderItemEntity> page = this.page(
                 new Query<OrderItemEntity>().getPage(params),
                 new QueryWrapper<OrderItemEntity>()
         );
 
-        return new PageResult(page);
+        return new PageUtils(page);
     }
 
 }

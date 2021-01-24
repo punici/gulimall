@@ -1,7 +1,7 @@
 package com.punici.gulimall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.punici.gulimall.common.utils.PageResult;
+import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.ware.entity.WareOrderTaskEntity;
 
 import java.util.Map;
@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface WareOrderTaskService extends IService<WareOrderTaskEntity> {
 
-    PageResult queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params);
 }
 

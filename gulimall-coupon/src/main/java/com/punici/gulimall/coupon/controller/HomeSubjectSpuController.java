@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.punici.gulimall.coupon.entity.HomeSubjectSpuEntity;
 import com.punici.gulimall.coupon.service.HomeSubjectSpuService;
-import com.punici.gulimall.common.utils.PageResult;
-import com.punici.gulimall.common.utils.Result;
+import com.punici.gulimall.common.utils.PageUtils;
+import com.punici.gulimall.common.utils.R;
 
 
 
@@ -35,10 +35,10 @@ public class HomeSubjectSpuController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("coupon:homesubjectspu:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageResult page = homeSubjectSpuService.queryPage(params);
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = homeSubjectSpuService.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return R.ok().put("page", page);
     }
 
 
@@ -47,10 +47,10 @@ public class HomeSubjectSpuController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("coupon:homesubjectspu:info")
-    public Result info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		HomeSubjectSpuEntity homeSubjectSpu = homeSubjectSpuService.getById(id);
 
-        return Result.ok().put("homeSubjectSpu", homeSubjectSpu);
+        return R.ok().put("homeSubjectSpu", homeSubjectSpu);
     }
 
     /**
@@ -58,10 +58,10 @@ public class HomeSubjectSpuController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:homesubjectspu:save")
-    public Result save(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
+    public R save(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
 		homeSubjectSpuService.save(homeSubjectSpu);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -69,10 +69,10 @@ public class HomeSubjectSpuController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("coupon:homesubjectspu:update")
-    public Result update(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
+    public R update(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
 		homeSubjectSpuService.updateById(homeSubjectSpu);
 
-        return Result.ok();
+        return R.ok();
     }
 
     /**
@@ -80,10 +80,10 @@ public class HomeSubjectSpuController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("coupon:homesubjectspu:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		homeSubjectSpuService.removeByIds(Arrays.asList(ids));
 
-        return Result.ok();
+        return R.ok();
     }
 
 }
