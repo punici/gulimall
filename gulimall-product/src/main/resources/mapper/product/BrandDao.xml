@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.punici.gulimall.product.dao.BrandDao">
-
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.punici.gulimall.product.entity.BrandEntity" id="brandMap">
         <result property="brandId" column="brand_id"/>
@@ -13,6 +12,4 @@
         <result property="firstLetter" column="first_letter"/>
         <result property="sort" column="sort"/>
     </resultMap>
-
-
 </mapper>

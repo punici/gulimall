@@ -2,11 +2,12 @@ package com.punici.gulimall.product.controller;
 
 import com.punici.gulimall.common.utils.PageResult;
 import com.punici.gulimall.common.utils.Result;
-import com.punici.gulimall.product.entity.AttrEntity;
 import com.punici.gulimall.product.service.AttrService;
+import com.punici.gulimall.product.vo.AttrRespVo;
 import com.punici.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Arrays;
 import java.util.Map;
 
@@ -27,11 +28,12 @@ public class AttrController
     /**
      * 列表
      */
-    @GetMapping("/base/list/{catelogId}")
+    @GetMapping("/{attrType}/list/{catelogId}")
     // @RequiresPermissions("product:attr:list")
-    public Result baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId)
+    public Result baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId,
+            @PathVariable("attrType") String attrType)
     {
-        PageResult page = attrService.queryBaseAttrPage(params,catelogId);
+        PageResult page = attrService.queryBaseAttrPage(params, catelogId,attrType);
         
         return Result.ok().put("page", page);
     }
@@ -55,9 +57,9 @@ public class AttrController
     // @RequiresPermissions("product:attr:info")
     public Result info(@PathVariable("attrId") Long attrId)
     {
-        AttrEntity attr = attrService.getById(attrId);
+        AttrRespVo respVo = attrService.getAttrInfo(attrId);
         
-        return Result.ok().put("attr", attr);
+        return Result.ok().put("attr", respVo);
     }
     
     /**
@@ -77,9 +79,9 @@ public class AttrController
      */
     @RequestMapping("/update")
     // @RequiresPermissions("product:attr:update")
-    public Result update(@RequestBody AttrEntity attr)
+    public Result update(@RequestBody AttrVo attr)
     {
-        attrService.updateById(attr);
+        attrService.updateAttr(attr);
         
         return Result.ok();
     }
@@ -95,5 +97,4 @@ public class AttrController
         
         return Result.ok();
     }
-    
 }
