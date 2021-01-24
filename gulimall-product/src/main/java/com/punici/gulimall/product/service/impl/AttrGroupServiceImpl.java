@@ -34,29 +34,20 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     public PageResult queryPage(Map<String, Object> params, Long catelogId)
     {
         LOGGER.info("params:{}", JSON.toJSONString(params));
-        
-        if(catelogId <= 0)
+        // select * from pms_attr_group where catelog_id=? and (attr_group_id=key or attr_group_name like
+        // %key%)
+        String key = (String) params.get("key");
+        QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
+        if(StringUtils.isNotBlank(key))
         {
-            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params),
-                    new QueryWrapper<AttrGroupEntity>());
-            
-            return new PageResult(page);
+            wrapper.and(w -> w.eq("attr_group_id", key).or().like("attr_group_name", key));
         }
-        else
+        if(catelogId > 0)
         {
-            // select * from pms_attr_group where catelog_id=? and (attr_group_id=key or attr_group_name like
-            // %key%)
-            String key = (String) params.get("key");
-            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
             wrapper.eq("catelog_id", catelogId);
-            if(StringUtils.isNotBlank(key))
-            {
-                wrapper.and(w -> w.eq("attr_group_id", key).or().like("attr_group_name", key));
-            }
-            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
-            
-            return new PageResult(page);
         }
+        
+        IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
+        return new PageResult(page);
     }
-    
 }
