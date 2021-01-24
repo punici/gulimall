@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-01-10 21:35:05
  */
 @Mapper
-public interface PurchaseDao extends BaseMapper<PurchaseEntity> {
-	
+public interface PurchaseDao extends BaseMapper<PurchaseEntity>
+{
+    
 }

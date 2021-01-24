@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-01-10 21:35:05
  */
 @Mapper
-public interface WareInfoDao extends BaseMapper<WareInfoEntity> {
-	
+public interface WareInfoDao extends BaseMapper<WareInfoEntity>
+{
+    
 }
