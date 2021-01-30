@@ -265,22 +265,19 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
         HashSet<Long> searchAttrIdsSet = new HashSet<>(searchAttrIds);
         // 取得支持检索的的Attrs，用来封装SkuEsModel的attrs属性
-        List<SkuEsModel.Attr> attrsList = productAttrValueEntities.stream().filter(item -> {
-            return searchAttrIdsSet.contains(item.getAttrId());
-        }).map(item -> {
-            SkuEsModel.Attr attrs = new SkuEsModel.Attr();
-            attrs.setAttrId(item.getAttrId());
-            attrs.setAttrName(item.getAttrName());
-            attrs.setAttrValue(item.getAttrValue());
-            return attrs;
-        }).collect(Collectors.toList());
+        List<SkuEsModel.Attr> attrsList = productAttrValueEntities.stream()
+                .filter(item -> searchAttrIdsSet.contains(item.getAttrId())).map(item -> {
+                    SkuEsModel.Attr attrs = new SkuEsModel.Attr();
+                    BeanUtils.copyProperties(item, attrs);
+                    return attrs;
+                }).collect(Collectors.toList());
         
         // 取得sku所对应的库存信息，即是否还有库存，为封装SkuEsModel的HasStock属性服务
         Map<Long, Boolean> stockMap = null;
         try
         {
             List<Long> skuInfoSkuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
-            R skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
+            R<List<SkuHasStockVo>> skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
             
             stockMap = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>() {}).stream()
                     .collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
@@ -344,6 +341,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         {
             // 远程调用失败
             // TODO 7.重复调用的问题，接口幂等性
+            // feign调用流程
+            // 1.构造请求数据，将对象转为json
+            // RequestTemplate template=buildTemplateFromArgs.create(argv);
+            // 2.发送请求进行执行(执行成功会解码响应数据)
+            // executeAndDecode(template);
+            //3. 执行请求会有请求机制
         }
     }
 }
