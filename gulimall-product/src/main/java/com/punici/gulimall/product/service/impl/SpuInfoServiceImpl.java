@@ -11,6 +11,7 @@ import com.punici.gulimall.common.to.es.SkuEsModel;
 import com.punici.gulimall.common.utils.PageUtils;
 import com.punici.gulimall.common.utils.Query;
 import com.punici.gulimall.common.utils.R;
+import com.punici.gulimall.common.vo.SkuHasStockVo;
 import com.punici.gulimall.product.dao.SpuInfoDao;
 import com.punici.gulimall.product.entity.*;
 import com.punici.gulimall.product.feign.CouponFeignService;
@@ -18,7 +19,6 @@ import com.punici.gulimall.product.feign.SearchFeignService;
 import com.punici.gulimall.product.feign.WareFeignService;
 import com.punici.gulimall.product.service.*;
 import com.punici.gulimall.product.vo.*;
-import com.punici.gulimall.ware.vo.SkuHasStockVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -277,7 +277,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         try
         {
             List<Long> skuInfoSkuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
-            R<List<SkuHasStockVo>> skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
+            R skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
             
             stockMap = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>() {}).stream()
                     .collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
@@ -346,7 +346,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             // RequestTemplate template=buildTemplateFromArgs.create(argv);
             // 2.发送请求进行执行(执行成功会解码响应数据)
             // executeAndDecode(template);
-            //3. 执行请求会有请求机制
+            // 3. 执行请求会有请求机制
         }
     }
 }

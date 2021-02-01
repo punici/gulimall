@@ -3,7 +3,6 @@ package com.punici.gulimall.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import org.apache.http.HttpStatus;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +11,7 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public class R<T> extends HashMap<String, Object>
+public class R extends HashMap<String, Object>
 {
     private static final long serialVersionUID = 1L;
     
@@ -22,14 +21,14 @@ public class R<T> extends HashMap<String, Object>
         put("msg", "success");
     }
     
-    public T getData(String key, TypeReference<T> tTypeReference)
+    public <T> T getData(String key, TypeReference<T> tTypeReference)
     {
         Object data = get(key);
         String jsonString = JSON.toJSONString(data);
         return JSON.parseObject(jsonString, tTypeReference);
     }
     
-    public T getData(TypeReference<T> tTypeReference)
+    public <T> T getData(TypeReference<T> tTypeReference)
     {
         Object data = get("data");
         String jsonString = JSON.toJSONString(data);

@@ -15,6 +15,12 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.10.10:8848
+  thymeleaf:
+    cache: false #关闭缓存
+  redis:
+    host: 192.168.10.10
+    port: 6379
+
 
 #mybatis mapper路径
 mybatis-plus:
