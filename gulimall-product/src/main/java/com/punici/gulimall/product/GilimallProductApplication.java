@@ -36,6 +36,19 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 4) 页面修改不重启服务器实时更新
  *      4.1) 引入dev-tools
  *      4.2) 修改完页面 ctrl+shift+F9重新自动编译页面，代码配置，推荐重启
+ *  6.整合springcache简化缓存开发
+ *  1）.引入依赖spring-boot-starter-cache
+ *  2）.写配置
+ *      cacheAutoconfig会导入redisCacheConfiguration,自动配好了缓存管理器：redisCacheManager
+ *      配置使用redis使用缓存，spring.cache.type redis
+ *  3).测试使用缓存
+ * @Cacheable: 触发将数据保存到缓存的操作
+ * @CacheEvict: 触发数据从缓存删除的操作
+ * @CachePut: 不影响方法执行更新缓存
+ * @CacheConfig: 在类级别共享缓存的配置
+ *
+ *
+ *
  */
 @SpringBootApplication
 @MapperScan("com.punici.gulimall.product.dao")

@@ -7,6 +7,7 @@ import com.punici.gulimall.product.service.BrandService;
 import com.punici.gulimall.product.service.CategoryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class GilimallProductApplicationTests
     
     @Autowired
     StringRedisTemplate redisTemplate;
+    
+    @Autowired(required = false)
+    RedissonClient redissonClient;
     
     @Test
     public void contextLoad()
@@ -71,8 +75,15 @@ public class GilimallProductApplicationTests
     {
         assertNotNull(redisTemplate);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("hello","redis_"+ UUID.randomUUID().toString());
+        valueOperations.set("hello", "redis_" + UUID.randomUUID().toString());
         String hello = valueOperations.get("hello");
         LOGGER.info(hello);
+    }
+    
+    @Test
+    public void redisson()
+    {
+        assertNotNull(redissonClient);
+        LOGGER.info(JSON.toJSONString(redissonClient));
     }
 }

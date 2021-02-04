@@ -13,6 +13,9 @@ import com.punici.gulimall.product.service.CategoryBrandRelationService;
 import com.punici.gulimall.product.service.CategoryService;
 import com.punici.gulimall.product.vo.Catalog2Vo;
 import com.punici.gulimall.product.vo.Catalog3List;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -22,6 +25,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service("categoryService")
@@ -36,6 +40,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     
     @Autowired
     StringRedisTemplate redisTemplate;
+    
+    @Autowired(required = false)
+    RedisClient redisClient;
+    
+    @Autowired
+    RedissonClient redissonClient;
     
     @Override
     public PageUtils queryPage(Map<String, Object> params)
@@ -104,23 +114,46 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJson()
     {
+        RLock lock = null;
+        /**
+         * 1.空结果缓存，解决缓存穿透的问题
+         * 2.设置随机过期时间 解决缓存雪崩的问题
+         * 3.加锁 解决缓存击穿的问题
+         */
         // 加入缓存逻辑
-        ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        
-        String key = "catalogJson";
-        // 缓存中有，返回redis中的数据
-        if(!StringUtils.isEmpty(ops.get(key)))
+        try
         {
-            return JSON.parseObject(ops.get(key), new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+            //注意锁的粒度，锁的粒度，越细越快
+            lock = redissonClient.getLock("catalogJson");
+            lock.lock();
+            ValueOperations<String, String> ops = redisTemplate.opsForValue();
+            
+            String key = "catalogJson";
+            // 缓存中有，返回redis中的数据
+            if(!StringUtils.isEmpty(ops.get(key)))
+            {
+                return JSON.parseObject(ops.get(key), new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+            }
+            else
+            {
+                // 缓存中没有数据，从数据库中查询
+                Map<String, List<Catalog2Vo>> catalogJsonFromDB = getCatalogJsonFromDB();
+                // 存入redis中
+                ops.set(key, JSON.toJSONString(catalogJsonFromDB), 60 * 60L, TimeUnit.HOURS);
+                return catalogJsonFromDB;
+            }
         }
-        else
+        catch (Exception e)
         {
-            // 缓存中没有数据，从数据库中查询
-            Map<String, List<Catalog2Vo>> catalogJsonFromDB = getCatalogJsonFromDB();
-            // 存入redis中
-            ops.set(key, JSON.toJSONString(catalogJsonFromDB));
-            return catalogJsonFromDB;
         }
+        finally
+        {
+            if(Objects.nonNull(lock))
+            {
+                lock.unlock();
+            }
+        }
+        return null;
     }
     
     /**
