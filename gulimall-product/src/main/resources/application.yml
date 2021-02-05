@@ -23,6 +23,11 @@ spring:
   #cache
   cache:
     type: redis
+    redis:
+      time-to-live: 36000
+      key-prefix: cache_ #缓存前缀
+      cache-null-values: true #是否缓存空值 需要缓存空值，防止缓存穿透
+      use-key-prefix: true #是否使用缓存前缀
     #cache-names:
 
 

@@ -46,6 +46,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @CacheEvict: 触发数据从缓存删除的操作
  * @CachePut: 不影响方法执行更新缓存
  * @CacheConfig: 在类级别共享缓存的配置
+ *      3.1)开启缓存功能@EnableCaching
+ *      3.2)使用缓存注解
+ * 4)cacheAutoconfig->redisCacheConfiguration->自动配置了redisCacheManager->初始化所有的缓存->
+ * 每个缓存决定使用什么配置->如果redisCacheConfiguration有就用已有的，没有用就用默认配置-》
+ * 想改缓存的配置，自需要在容器中放一个redisCacheConfiguration即可,就会应用到当前redisCacheManager管理的所有缓存分区中
+ *
  *
  *
  *

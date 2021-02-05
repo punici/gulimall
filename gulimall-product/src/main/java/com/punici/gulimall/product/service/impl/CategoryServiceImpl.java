@@ -17,6 +17,10 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -89,17 +93,31 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     /**
      * 级联更新所有关联的数据
      * 
+     * @CacheEvict 缓存失效模式
      * @param category
      */
     @Transactional
     @Override
+    @Caching(evict = { @CacheEvict(value = "category", key = "'getLevel1Category'"),
+            @CacheEvict(value = "category", key = "'getCatalogJson'"), })
+    @CacheEvict(value = "category",allEntries = true)//category所有分区的值都会被删除
+    @CachePut //双写模式
     public void updateCascade(CategoryEntity category)
     {
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
     }
     
+    /**
+     * 每一个需要缓存的数据我们需要指定要放到那个名字的缓存：缓存的分区，按照业务类型分区
+     * 代表当前的方法的结果需要缓存，如果缓存中有数据，方法不用调用,如果缓存中没有数据，调用方法，将方法的结果缓存到缓存中 默认行为： 1)如果缓存命中，方法不会掉用
+     * 2)key默认自动生成，缓存的名字：simplekey[] 3)缓存的value的值，默认使用jdk序列号机制，将序列化的数据存到redis 4)默认ttl时间 -1，永不过期 自定义:
+     * 1)指定生成缓存使用的key 2)指定缓存的数据的存活时间,在配置文件中指定 3)将数据保存为json格式，
+     * 
+     * @return
+     */
     @Override
+    @Cacheable(value = "category", key = "#root.method.name")
     public List<CategoryEntity> getLevel1Category()
     {
         return baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
@@ -116,14 +134,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     {
         RLock lock = null;
         /**
-         * 1.空结果缓存，解决缓存穿透的问题
-         * 2.设置随机过期时间 解决缓存雪崩的问题
-         * 3.加锁 解决缓存击穿的问题
+         * 1.空结果缓存，解决缓存穿透的问题 2.设置随机过期时间 解决缓存雪崩的问题 3.加锁 解决缓存击穿的问题
          */
         // 加入缓存逻辑
         try
         {
-            //注意锁的粒度，锁的粒度，越细越快
+            // 注意锁的粒度，锁的粒度，越细越快
             lock = redissonClient.getLock("catalogJson");
             lock.lock();
             ValueOperations<String, String> ops = redisTemplate.opsForValue();
