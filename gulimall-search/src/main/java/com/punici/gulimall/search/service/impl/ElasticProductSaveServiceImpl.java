@@ -2,7 +2,7 @@ package com.punici.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.punici.gulimall.common.to.es.SkuEsModel;
-import com.punici.gulimall.search.EsConstant;
+import com.punici.gulimall.search.constant.EsConstant;
 import com.punici.gulimall.search.config.GulimallElasticSearchConfig;
 import com.punici.gulimall.search.service.ElasticProductSaveService;
 import lombok.extern.slf4j.Slf4j;
