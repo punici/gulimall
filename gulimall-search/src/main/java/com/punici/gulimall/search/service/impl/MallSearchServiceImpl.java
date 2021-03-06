@@ -1,10 +1,14 @@
 package com.punici.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.punici.gulimall.common.to.es.SkuEsModel;
+import com.punici.gulimall.common.utils.R;
 import com.punici.gulimall.search.config.GulimallElasticSearchConfig;
 import com.punici.gulimall.search.constant.EsConstant;
+import com.punici.gulimall.search.feign.ProductFeignService;
 import com.punici.gulimall.search.service.MallSearchService;
+import com.punici.gulimall.search.vo.AttrResponseVo;
 import com.punici.gulimall.search.vo.SearchParam;
 import com.punici.gulimall.search.vo.SearchResult;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -49,6 +54,9 @@ public class MallSearchServiceImpl implements MallSearchService
     @Qualifier("esRestClient")
     @Autowired(required = false)
     private RestHighLevelClient client;
+    
+    @Autowired(required = false)
+    private ProductFeignService productFeignService;
     
     /**
      *
@@ -106,7 +114,10 @@ public class MallSearchServiceImpl implements MallSearchService
             boolQuery.filter(QueryBuilders.termsQuery("brandId", param.getBrandId()));
         }
         // 1.3 filter 按照是否有库存d查询
-        boolQuery.filter(QueryBuilders.termQuery("hasStock", param.getHasStock() == 1));
+        if(Objects.nonNull(param.getHasStock()))
+        {
+            boolQuery.filter(QueryBuilders.termQuery("hasStock", param.getHasStock() == 1));
+        }
         // 1.4 filter 按照价格区间查询
         if(StringUtils.isNotBlank(param.getSkuPrice()))
         {
@@ -153,6 +164,7 @@ public class MallSearchServiceImpl implements MallSearchService
                 boolQuery.filter(nestedQueryBuilder);
             }
         }
+        
         sourceBuilder.query(boolQuery);
         
         /*
@@ -309,6 +321,39 @@ public class MallSearchServiceImpl implements MallSearchService
                 String catalogName = catalogNameAggBuckets.get(0).getKeyAsString();
                 catalogVo.setCatalogName(catalogName);
             }
+        }
+        // 6. 构建面包屑导航
+        List<String> attrs = param.getAttrs();
+        if(attrs != null && attrs.size() > 0)
+        {
+            List<SearchResult.NavVo> navVos = attrs.stream().map(attr -> {
+                String[] split = attr.split("_");
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                // 6.1 设置属性值
+                navVo.setNavValue(split[1]);
+                // 6.2 查询并设置属性名
+                try
+                {
+                    R r = productFeignService.attrInfo(Long.parseLong(split[0]));
+                    if(r.getCode() == 0)
+                    {
+                        AttrResponseVo attrResponseVo = JSON.parseObject(JSON.toJSONString(r.get("attr")),
+                                new TypeReference<AttrResponseVo>() {});
+                        navVo.setNavName(attrResponseVo.getAttrName());
+                    }
+                }
+                catch (Exception e)
+                {
+                    log.error("远程调用商品服务查询属性失败", e);
+                }
+                // 6.3 设置面包屑跳转链接(当点击该链接时剔除点击属性)
+                String queryString = param.get_queryString();
+                String replace = queryString.replace("&attrs=" + attr, "").replace("attrs=" + attr + "&", "")
+                        .replace("attrs=" + attr, "");
+                navVo.setLink("http://search.gulimall.com/search.html" + (replace.isEmpty() ? "" : "?" + replace));
+                return navVo;
+            }).collect(Collectors.toList());
+            result.setNavs(navVos);
         }
         result.setCatalogs(catalogVos);
         // 页码

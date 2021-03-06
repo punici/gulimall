@@ -20,7 +20,7 @@ public class SearchParam
     private String Sort;// 排序条件
     
     // 是否显示有货
-    private Integer hasStock=1;
+    private Integer hasStock = 1;
     
     // 价格区间查询
     private String skuPrice;
@@ -29,7 +29,7 @@ public class SearchParam
     private List<String> attrs;
     
     // 页码
-    private Integer pageNum = 1;
+    private Integer pageNum;
     
     // 原生的所有查询条件
     private String _queryString;
